@@ -7,3 +7,5 @@ export interface Personaje{
     amigo: string,
     imagen: string
   }
+
+export const input  = document.getElementById("input")
