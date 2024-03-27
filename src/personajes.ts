@@ -1,5 +1,5 @@
 import { Personaje, input, botonBuscar } from './personajes.model'
-import { obtenerPersonajes } from './personajes.api'
+import { obtenerPersonajes, obtenerPersonajesFiltrados } from './personajes.api'
 
 const crearElementoImagen = (portada: string): HTMLImageElement => {
   const imagen = document.createElement('img')
@@ -54,20 +54,27 @@ const pintarPersonajes = async (): Promise<void> => {
     throw new Error('No se ha encontrado el contenedor del listado')
   }
 }
+const pintarPersonajesFiltrados = async (input: string): Promise<void> => {
+  const personajeFiltrado = await  obtenerPersonajesFiltrados(input)
+  const listado = document.querySelector('#listado-personajes')
+  if (listado && listado instanceof HTMLDivElement) {
+      const contenedorPersonaje = crearContenedorPersonaje(personajeFiltrado)
+      listado.appendChild(contenedorPersonaje)
+    }
+  else {
+    throw new Error('No se ha encontrado el contenedor del listado')
+  }
+}
+
+
 const handleBusqueda = async () => {
   if (input && input instanceof HTMLInputElement) {
-    const inputValue = input.value.toLowerCase()
-    const personajes = await obtenerPersonajes()
+    const inputValue = input.value
     const listado = document.querySelector('#listado-personajes')
-    const personajesFiltrados = personajes.filter((personaje) =>
-      personaje.nombre.toLowerCase().startsWith(inputValue)
-    )
+    
     if (listado && listado instanceof HTMLDivElement) {
       listado.innerHTML = ''
-      personajesFiltrados.forEach((personaje) => {
-        const contenedorPersonaje = crearContenedorPersonaje(personaje)
-        listado.appendChild(contenedorPersonaje)
-      })
+      pintarPersonajesFiltrados(inputValue) 
     }
   }
 }
