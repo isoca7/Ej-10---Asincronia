@@ -1,4 +1,4 @@
-import { Personaje, input } from './personajes.model'
+import { Personaje, input, botonBuscar } from './personajes.model'
 import { obtenerPersonajes } from './personajes.api'
 
 const crearElementoImagen = (portada: string): HTMLImageElement => {
@@ -73,7 +73,8 @@ const handleBusqueda = async () => {
 }
 
 document.addEventListener('DOMContentLoaded', pintarPersonajes)
-if(input && input instanceof HTMLInputElement){
-  input.addEventListener('input', handleBusqueda)
+
+if(botonBuscar && botonBuscar instanceof HTMLButtonElement){
+  botonBuscar.addEventListener('click', handleBusqueda)
 }
 

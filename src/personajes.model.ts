@@ -9,3 +9,4 @@ export interface Personaje{
   }
 
 export const input  = document.getElementById("input")
+export const botonBuscar  = document.getElementById("boton-buscar")
